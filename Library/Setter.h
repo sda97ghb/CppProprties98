@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stdexcept>
+#include "CallSetterOfReadOnlyProperty.h"
 
 template <typename T>
 class Setter {
@@ -49,12 +49,6 @@ public:
 
 private:
 	void(*m_setter)(const T&);
-};
-
-class CallSetterOfReadOnlyPropertyException : public std::logic_error {
-public:
-	CallSetterOfReadOnlyPropertyException() :
-		std::logic_error("Attempt to set value for read only property") {}
 };
 
 template <typename T>

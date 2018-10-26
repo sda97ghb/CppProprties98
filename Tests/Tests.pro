@@ -3,4 +3,5 @@ TEMPLATE = subdirs
 SUBDIRS += \
     TestGetters \
     TestSetter \
-    TestProperty
+    TestProperty \
+    TestObservableSetter

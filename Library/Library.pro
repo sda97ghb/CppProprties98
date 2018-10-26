@@ -7,4 +7,7 @@ CONFIG -= app_bundle
 HEADERS += \
     Getter.h \
     Setter.h \
-    Property.h
+    Property.h \
+    ObservableProperty.h \
+    ObservableSetter.h \
+    CallSetterOfReadOnlyProperty.h
