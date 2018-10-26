@@ -10,6 +10,7 @@ private slots:
 	void testClassGetter();
 	void testStaticClassGetter();
 	void testStaticGetter();
+	void testConstGetter();
 };
 
 //------------------------------------------------------------------------------
@@ -39,8 +40,11 @@ void TestGetters::testClassGetter() {
 	Getter<int>* intGetter = GetterFactory<int>::of(&c, &C::getInt);
 	Getter<QString>* strGetter = GetterFactory<QString>::of(&c, &C::getString);
 
-	QCOMPARE(intGetter->get(0), 42);
-	QCOMPARE(strGetter->get(""), "Hello Getter!");
+	int intStub;
+	QString strStub;
+
+	QCOMPARE(intGetter->get(intStub), 42);
+	QCOMPARE(strGetter->get(strStub), "Hello Getter!");
 }
 
 //------------------------------------------------------------------------------
@@ -60,8 +64,11 @@ void TestGetters::testStaticClassGetter() {
 	Getter<int>* intGetter = GetterFactory<int>::of(&C::getInt);
 	Getter<QString>* strGetter = GetterFactory<QString>::of(&C::getString);
 
-	QCOMPARE(intGetter->get(0), 42);
-	QCOMPARE(strGetter->get(""), "Hello Getter!");
+	int intStub;
+	QString strStub;
+
+	QCOMPARE(intGetter->get(intStub), 42);
+	QCOMPARE(strGetter->get(strStub), "Hello Getter!");
 }
 
 //------------------------------------------------------------------------------
@@ -78,8 +85,24 @@ void TestGetters::testStaticGetter() {
 	Getter<int>* intGetter = GetterFactory<int>::of(&::getInt);
 	Getter<QString>* strGetter = GetterFactory<QString>::of(&::getString);
 
-	QCOMPARE(intGetter->get(0), 42);
-	QCOMPARE(strGetter->get(""), "Hello Getter!");
+	int intStub;
+	QString strStub;
+
+	QCOMPARE(intGetter->get(intStub), 42);
+	QCOMPARE(strGetter->get(strStub), "Hello Getter!");
+}
+
+//------------------------------------------------------------------------------
+
+void TestGetters::testConstGetter() {
+	Getter<int>* intGetter = GetterFactory<int>::of(42);
+	Getter<QString>* strGetter = GetterFactory<QString>::of("Hello Getter!");
+
+	int intStub;
+	QString strStub;
+
+	QCOMPARE(intGetter->get(intStub), 42);
+	QCOMPARE(strGetter->get(strStub), "Hello Getter!");
 }
 
 QTEST_APPLESS_MAIN(TestGetters)

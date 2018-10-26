@@ -11,7 +11,8 @@ private slots:
 	void testDefaultProperties();
 	void testFunctorProperties();
 	void testMethodProperties();
-	void testReadOnlyProperties();
+	void testReadOnlyPropertiesAreGettable();
+	void testReadOnlyPropertiesAreNotSettable();
 };
 
 //------------------------------------------------------------------------------
@@ -226,13 +227,41 @@ QString ReadOnlyUser::age() {
 	return "42";
 }
 
-void TestProperty::testReadOnlyProperties() {
+void TestProperty::testReadOnlyPropertiesAreGettable() {
 	ReadOnlyUser user;
 
 	QCOMPARE(user.FirstName, "John");
 	QCOMPARE(user.LastName, "Doe");
 	QCOMPARE(user.Email, "user@example.com");
 	QCOMPARE(user.Age, "42");
+}
+
+void TestProperty::testReadOnlyPropertiesAreNotSettable() {
+	ReadOnlyUser user;
+
+	try {
+		user.FirstName = "Jane";
+		QFAIL("Exception was not thrown");
+	}
+	catch (CallSetterOfReadOnlyPropertyException) {}
+
+	try {
+		user.LastName = "Smith";
+		QFAIL("Exception was not thrown");
+	}
+	catch (CallSetterOfReadOnlyPropertyException) {}
+
+	try {
+		user.Email = "human@email.com";
+		QFAIL("Exception was not thrown");
+	}
+	catch (CallSetterOfReadOnlyPropertyException) {}
+
+	try {
+		user.Age = "over9000";
+		QFAIL("Exception was not thrown");
+	}
+	catch (CallSetterOfReadOnlyPropertyException) {}
 }
 
 QTEST_APPLESS_MAIN(TestProperty)

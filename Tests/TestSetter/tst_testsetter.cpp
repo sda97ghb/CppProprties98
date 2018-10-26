@@ -10,6 +10,7 @@ private slots:
 	void testClassSetter();
 	void testStaticClassSetter();
 	void testStaticSetter();
+	void testReadOnlySetter();
 };
 
 //------------------------------------------------------------------------------
@@ -127,6 +128,33 @@ void TestSetter::testStaticSetter() {
 
 	QCOMPARE(globalInt, 42);
 	QCOMPARE(globalString, "Hello Setter!");
+}
+
+void TestSetter::testReadOnlySetter() {
+	Setter<int>* intSetter = SetterFactory<int>::READ_ONLY;
+	Setter<QString>* strSetter = SetterFactory<QString>::READ_ONLY;
+
+	bool intThrown = false;
+	bool strThrown = false;
+
+	try {
+		int intStub1, intStub2;
+		intSetter->set(intStub1, intStub2);
+	}
+	catch (CallSetterOfReadOnlyPropertyException) {
+		intThrown = true;
+	}
+
+	try {
+		QString strStub1, strStub2;
+		strSetter->set(strStub1, strStub2);
+	}
+	catch (CallSetterOfReadOnlyPropertyException) {
+		strThrown = true;
+	}
+
+	QVERIFY(intThrown);
+	QVERIFY(strThrown);
 }
 
 QTEST_APPLESS_MAIN(TestSetter)
