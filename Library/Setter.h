@@ -75,11 +75,11 @@ public:
 	static Setter<T>* const READ_ONLY;
 
 	template <class C>
-	static ClassSetter<C, T>* of(C* obj, void(C::*setter)(const T&)) {
+	static Setter<T>* of(C* obj, void(C::*setter)(const T&)) {
 		return new ClassSetter<C, T>(obj, setter);
 	}
 
-	static StaticSetter<T>* of(void (*setter)(const T&)) {
+	static Setter<T>* of(void (*setter)(const T&)) {
 		return new StaticSetter<T>(setter);
 	}
 };

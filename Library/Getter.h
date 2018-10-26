@@ -71,15 +71,15 @@ public:
 	static Getter<T>* const DEFAULT;
 
 	template <class C>
-	static ClassGetter<C, T>* of(C* obj, T(C::*getter)()const) {
+	static Getter<T>* of(C* obj, T(C::*getter)()const) {
 		return new ClassGetter<C, T>(obj, getter);
 	}
 
-	static StaticGetter<T>* of(T(*getter)()) {
+	static Getter<T>* of(T(*getter)()) {
 		return new StaticGetter<T>(getter);
 	}
 
-	static ConstGetter<T>* of(const T& constant) {
+	static Getter<T>* of(const T& constant) {
 		return new ConstGetter<T>(constant);
 	}
 };
